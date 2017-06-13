@@ -29,6 +29,25 @@ var board = {
     9: ' '
 };
 
+var winCombinations = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
+                       [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
+
+checkWin = (player) => {
+    var i, j, markCount
+    for (i = 0; i < winCombinations.length; i++) {
+        markCount = 0;
+        for (j = 0; j < winCombinations[i].length; j++) {
+            if (board[winCombinations[i][j]] === player) {
+                markCount++;
+            }
+            if (markCount === 3) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 markBoard = (position, mark) => {
     board[position] = mark.toUpperCase();
     console.log('\n' +
@@ -67,6 +86,14 @@ playTurn = (player) => {
             if (checkTie() === true) {
                 console.log('Tie Game');
                 return;
+            }
+            if(checkWin('X') ===true){
+              console.log('X wins')
+              return
+            }
+            if(checkWin('O') ===true){
+              console.log('O wins')
+              return
             }
             if (player === 'X') {
                 playTurn('O');
